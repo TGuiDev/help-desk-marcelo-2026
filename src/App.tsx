@@ -2,9 +2,14 @@ import { Header } from "./components/Header"
 import { TicketCard } from "./components/TicketCard"
 import { Panel } from "./components/Panel"
 import { initialTickets } from "./data/ticket";
+import { useAuth } from "./auth/useAuth";
+import { Login } from "./pages/Login";
 
 
 function App() {
+  const { user, logout } = useAuth()
+
+  if (!user) return <Login />
 
   return (
     <>
@@ -12,6 +17,9 @@ function App() {
         <Header
           title = "HelpDesk Lite" //Passando o HeaderProps (props)
           subtitle = "Gerenciamento de chamados" //Passando o HeaderProps (props)
+          userName={user.name}
+          userRole={user.role}
+          onLogout={logout}
         />
 
         <main className="mx-auto max-w-6xl p-6 mt-2">
